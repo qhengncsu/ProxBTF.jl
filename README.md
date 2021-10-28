@@ -19,16 +19,16 @@ julia> using ProxBTF
 will help you bring the elements of the export list into the surrounding global namespace, namely pbtf and pbsrtf.
 
 # Using Jupyternotebook
-To be able to use Jupyternotebook with a Julia kernel, you'll need to install IJulia
+To be able to use Jupyternotebook with a Julia kernel, you'll need to install IJulia.
 ````
 Pkg.add("IJulia")
 ````
 
 # A light-weight alternative
-In consideration of the fact that ProxBTF.jl is heavy-weight due to its dependence on Gurobi.jl and Convex.jl, we provide an alternative way of using our implementation. Everything is packed into a single, self-contained script. See [minimum_reproduce.jl](). However, the script does not contain code for Proximal Bayesian Shape-Restriced Trend Filtering. If you wish to use pbsrtf, then it is necessary to install ProxBTF.jl per the instructions above.
+In consideration of the fact that ProxBTF.jl is heavy-weight due to its dependence on Gurobi.jl and Convex.jl, we provide an alternative way of using our implementation. Everything is packed into a single, self-contained script. See [minimum_reproduce.jl](https://github.com/qhengncsu/ProxBTF.jl/blob/main/vignettes/minimum_reproduce.jl). However, the script does not contain code for Proximal Bayesian Shape-Restriced Trend Filtering. If you wish to use pbsrtf, then it is necessary to install ProxBTF.jl per the instructions above.
 
 # Tutorials
-For a tutorial of using the light-weight implementation, see [Introduction to pbtf](). For a tutorial of using the whole package ProxBTF.jl, see [Introduction to ProxBTF.jl](). Notice that if you wish to run pbsrtf, you need a valid Gurobi license in your system. You can obtain an academic license for free from [Gurobi license](https://www.gurobi.com/academia/academic-program-and-licenses/).
+For a tutorial of using the light-weight implementation, see [Introduction to pbtf](https://github.com/qhengncsu/ProxBTF.jl/blob/main/vignettes/Introduction_to_pbtf.ipynb). For a tutorial of using the whole package ProxBTF.jl, see [Introduction to ProxBTF.jl](https://github.com/qhengncsu/ProxBTF.jl/blob/main/vignettes/Introduction_to_ProxBTF.jl.ipynb). Notice that if you wish to run pbsrtf, you need a valid Gurobi license in your system. You can obtain an academic license for free from [Gurobi license](https://www.gurobi.com/academia/academic-program-and-licenses/).
 
 # Issues
 Feel free to contact the author at <qheng@ncsu.edu> for questions, issues and comments.
