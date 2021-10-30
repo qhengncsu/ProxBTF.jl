@@ -1,3 +1,5 @@
+#reproducing part of our results is as easy as
+#running this script from start to end in Julia (>=1.6) 
 using Pkg
 Pkg.add("SparseArrays")
 Pkg.add("Roots")
