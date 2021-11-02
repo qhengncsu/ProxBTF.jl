@@ -37,6 +37,8 @@ function pbsrtf(
     x::Vector{T},                # predictor
     k::Int,                      # order of desired polynomial
     restriction::String;         # shape restriction
+    lb::Union{Vector{T},Nothing}=nothing, #lower bound for β
+    ub::Union{Vector{T},Nothing}=nothing, #upper bound for β
     scale::Bool=true,            # whether to scale x and y to the range of 0-10
     thinning::Bool=false,        # whether to apply the thinning technique
     nbins::Int=100,              # number of bins if thinning is applied
@@ -58,7 +60,7 @@ function pbsrtf(
         y = (y .- ymin)./yscale
         x = (x .- xmin)./xscale
     end
-    problem = pbsrtfProblem(y,x,k,restriction,λ=λ,s=s,r=r,μ=μ,thinning=thinning,nbins=nbins)
+    problem = pbsrtfProblem(y,x,k,restriction,lb=lb,ub=ub,λ=λ,s=s,r=r,μ=μ,thinning=thinning,nbins=nbins)
     if verbose
         elapse_time = @elapsed results = mcmc_with_warmup(GLOBAL_RNG, problem, nsample, initialization=(ϵ=0.01,),
         warmup_stages=default_warmup_stages(;stepsize_search=nothing,

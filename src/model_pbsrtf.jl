@@ -4,6 +4,8 @@ mutable struct pbsrtfProblem{T<:Real}
     k       :: Int
     restriction :: String             # 'increasing','convex','decreasing','concave'
                                       # 'inc-convex','inc-concave','dec-convex','dec-concave'
+    lb      :: Union{Vector{T},Nothing} # lower bound vector for β
+    ub      :: Union{Vector{T},Nothing} # upper bound vector for β
     λ       :: Union{T,Nothing}       # Moreau-Yosida envelope parameter
     s       :: T                      # IG(s, r) prior for σ²
     r       :: T
@@ -21,6 +23,8 @@ mutable struct pbsrtfProblem{T<:Real}
 end
 
 function pbsrtfProblem(y::Vector{T}, x::Vector{T}, k::Int, restriction::String;
+                       lb::Union{Vector{T},Nothing}=nothing,
+                       ub::Union{Vector{T},Nothing}=nothing,
                        thinning::Bool=false,nbins::Int=100,λ::Union{T,Nothing}=nothing,
                        s::T=1e-3,r::T=1e-3,μ::Union{T,Nothing}=nothing) where T<: Real
     m = length(x)
@@ -50,14 +54,14 @@ function pbsrtfProblem(y::Vector{T}, x::Vector{T}, k::Int, restriction::String;
     GRB_ENV = Env()
     GRBsetdblparam(GRB_ENV,"FeasibilityTol",1e-6)
     GRBsetdblparam(GRB_ENV,"OptimalityTol",1e-6)
-    pbsrtfProblem{T}(y,x,k,restriction,λ,s,r,μ,m,n,xgrid,w,ybar,sse,D¹,D²,D,GRB_ENV)
+    pbsrtfProblem{T}(y,x,k,restriction,lb,ub,λ,s,r,μ,m,n,xgrid,w,ybar,sse,D¹,D²,D,GRB_ENV)
 end
 
 dimension(problem::pbsrtfProblem) = problem.n + 2
 capabilities(::Type{<:pbsrtfProblem}) = LogDensityOrder{1}()
 
 function logdensity_and_gradient(problem::pbsrtfProblem, z)
-    @unpack y,x,k,restriction,λ,s,r,μ,m,n,xgrid,w,ybar,sse,D¹,D²,D,GRB_ENV=problem
+    @unpack y,x,k,restriction,lb,ub,λ,s,r,μ,m,n,xgrid,w,ybar,sse,D¹,D²,D,GRB_ENV=problem
     β        = view(z,1:n)
     logσ²    = z[n+1]
     σ²       = exp(logσ²)
@@ -82,6 +86,12 @@ function logdensity_and_gradient(problem::pbsrtfProblem, z)
         p_gurobi.constraints += [D¹*η>=0,D²*η<=0]
     elseif restriction=="dec-concave"
         p_gurobi.constraints += [D¹*η<=0,D²*η<=0]
+    end
+    if !isnothing(lb)
+        p_gurobi.constraints += η>=lb
+    end
+    if !isnothing(ub)
+        p_gurobi.constraints += η<=ub
     end
     solve!(p_gurobi,Optimizer(GRB_ENV),silent_solver=true,warmstart=true)
     #while p_gurobi.status!=Convex.MOI.OPTIMAL
