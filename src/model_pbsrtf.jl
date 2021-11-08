@@ -69,9 +69,10 @@ function logdensity_and_gradient(problem::pbsrtfProblem, z)
     α        = exp(logα)
     η = Variable(n)
     t = Variable()
-    p_gurobi = minimize(sumsquares(β-η)+sumsquares(α-t),norm(D*η,1)<=t)
+    #p_gurobi = minimize(sumsquares(β-η)+sumsquares(α-t),norm(D*η,1)<=t)
     if restriction=="increasing"
-        p_gurobi.constraints += D¹*η>=0
+        p_gurobi = minimize(sumsquares(β-η)+sumsquares(α-t),norm(D*η,1)+norm(pos(D¹*η),1)<=t)
+        #p_gurobi.constraints += D¹*η>=0
     elseif restriction=="decreasing"
         p_gurobi.constraints += D¹*η<=0
     elseif restriction=="convex"
