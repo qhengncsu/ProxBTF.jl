@@ -43,7 +43,7 @@ function pbsrtfProblem(y::Vector{T}, x::Vector{T}, k::Int, restriction::String;
         n = nbins
     end
     if λ == nothing
-        λ = var(y)*1e-3
+        λ = var(y)*1e-4
     end
     if μ == nothing
        μ = 3.0
