@@ -74,7 +74,8 @@ function logdensity_and_gradient(problem::pbsrtfProblem, z)
         p_gurobi = minimize(sumsquares(β-η)+sumsquares(α-t)+(2*λ)*1000*norm(pos(-D¹*η),1),norm(D*η,1)<=t)
         #p_gurobi.constraints += D¹*η>=0
     elseif restriction=="decreasing"
-        p_gurobi.constraints += D¹*η<=0
+        p_gurobi = minimize(sumsquares(β-η)+sumsquares(α-t)+(2*λ)*1000*norm(pos(-D²*η),1),norm(D*η,1)<=t)
+        #p_gurobi.constraints += D¹*η<=0
     elseif restriction=="convex"
         p_gurobi.constraints += D²*η>=0
     elseif restriction=="concave"
@@ -108,7 +109,7 @@ function logdensity_and_gradient(problem::pbsrtfProblem, z)
     qf       = (ssm+sse+2*r)/(2*σ²)
     logl     = -qf-(m/2+s)*logσ²+logα-μ*α
     dist²    = norm(β.-β_proj)^2+(α-α_proj)^2
-    diff     = -D¹*β_proj
+    diff     = -D²*β_proj
     logl    -= dist²/(2*λ)+1000*norm(diff.*(diff.>=0),1)
     ∇        = similar(z)
     ∇[1:n]   = (w.*res)./σ².-((β.-β_proj)./λ)

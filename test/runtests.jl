@@ -9,7 +9,7 @@ visualize(result_quantile,problem,legend_position=:top)
 x   = [0.1:0.1:10;]
 fx  = x .+ sin.(x)
 y = fx + σ .* randn(100)
-result_summary,result_quantile,problem,elapse_time=pbsrtf(y,x,2,"increasing";μ=3.0)
+result_summary,result_quantile,problem,elapse_time=pbsrtf(y,x,2,"increasing";μ=2.0)
 visualize(result_quantile,problem)
 fx = map(xi -> 0<= xi <=2 ? 10-5xi : 2<xi <= 8 ? 0 : 5xi-40,x)
 y = fx + σ .* randn(100)
