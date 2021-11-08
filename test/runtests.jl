@@ -5,11 +5,11 @@ fx  = 13 .* sin.((4*π/100).*x)
 y = fx + σ .* randn(100)
 result_summary,result_quantile,problem,elapse_time=pbtf(y,x,2,nsample=3000)
 visualize(result_quantile,problem,legend_position=:top)
-σ   = 1.0# noise s.d.
+σ   = 0.5# noise s.d.
 x   = [0.1:0.1:10;]
 fx  = x .+ sin.(x)
 y = fx + σ .* randn(100)
-result_summary,result_quantile,problem,elapse_time=pbsrtf(y,x,2,"increasing";μ=2.0)
+result_summary,result_quantile,problem,elapse_time=pbsrtf(y,x,2,"increasing";μ=1.0)
 visualize(result_quantile,problem)
 fx = map(xi -> 0<= xi <=2 ? 10-5xi : 2<xi <= 8 ? 0 : 5xi-40,x)
 y = fx + σ .* randn(100)
