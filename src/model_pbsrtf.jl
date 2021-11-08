@@ -77,7 +77,8 @@ function logdensity_and_gradient(problem::pbsrtfProblem, z)
         p_gurobi = minimize(sumsquares(β-η)+sumsquares(α-t)+(2*λ)*1000*norm(pos(-D²*η),1),norm(D*η,1)<=t)
         #p_gurobi.constraints += D¹*η<=0
     elseif restriction=="convex"
-        p_gurobi.constraints += D²*η>=0
+        p_gurobi = minimize(sumsquares(β-η)+sumsquares(α-t)+(2*λ)*1000*norm(pos(-D²*η),1),norm(D*η,1)<=t)
+        #p_gurobi.constraints += D²*η>=0
     elseif restriction=="concave"
         p_gurobi.constraints += D²*η<=0
     elseif restriction=="inc-convex"
