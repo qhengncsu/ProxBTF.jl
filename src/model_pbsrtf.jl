@@ -43,7 +43,7 @@ function pbsrtfProblem(y::Vector{T}, x::Vector{T}, k::Int, restriction::Union{St
         n = nbins
     end
     if λ == nothing
-        λ = var(y)*1e-3
+        λ = var(y)*1e-4
     end
     if μ == nothing
        μ = 3.0
@@ -71,7 +71,6 @@ function logdensity_and_gradient(problem::pbsrtfProblem, z)
     t = Variable()
     p_gurobi = minimize(sumsquares(β-η)+sumsquares(α-t),norm(D*η,1)<=t)
     if restriction=="increasing"
-        p_gurobi.constraints += D¹*η>=0
     elseif restriction=="decreasing"
         p_gurobi.constraints += D¹*η<=0
     elseif restriction=="convex"
