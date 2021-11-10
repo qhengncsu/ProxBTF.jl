@@ -2,7 +2,7 @@ mutable struct pbsrtfProblem{T<:Real}
     y       :: Vector{T}              # response
     x       :: Vector{T}              # design
     k       :: Int
-    restriction :: String             # 'increasing','convex','decreasing','concave'
+    restriction :: Union{String,Nothing} # 'increasing','convex','decreasing','concave'
                                       # 'inc-convex','inc-concave','dec-convex','dec-concave'
     lb      :: Union{Vector{T},Nothing} # lower bound vector for β
     ub      :: Union{Vector{T},Nothing} # upper bound vector for β
@@ -22,7 +22,7 @@ mutable struct pbsrtfProblem{T<:Real}
     GRB_ENV :: Any                    # gurobi environment
 end
 
-function pbsrtfProblem(y::Vector{T}, x::Vector{T}, k::Int, restriction::String;
+function pbsrtfProblem(y::Vector{T}, x::Vector{T}, k::Int, restriction::Union{String,Nothing};
                        lb::Union{Vector{T},Nothing}=nothing,
                        ub::Union{Vector{T},Nothing}=nothing,
                        thinning::Bool=false,nbins::Int=100,λ::Union{T,Nothing}=nothing,
@@ -93,7 +93,7 @@ function logdensity_and_gradient(problem::pbsrtfProblem, z)
     if !isnothing(ub)
         p_gurobi.constraints += η<=ub
     end
-    solve!(p_gurobi,Optimizer(GRB_ENV),silent_solver=true,warmstart=true)
+    solve!(p_gurobi,Optimizer(GRB_ENV),silent_solver=true,warmstart=true,verbose=false)
     #while p_gurobi.status!=Convex.MOI.OPTIMAL
         #β = β .+ 1e-3 .*randn(n)
         #p_gurobi.objective = sumsquares(β-η)+sumsquares(α-t)

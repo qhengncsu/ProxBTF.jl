@@ -36,7 +36,7 @@ function pbsrtf(
     y::Vector{T},                # response
     x::Vector{T},                # predictor
     k::Int,                      # order of desired polynomial
-    restriction::String;         # shape restriction
+    restriction::Union{String,Nothing}; # shape restriction
     lb::Union{Vector{T},Nothing}=nothing, #lower bound for β
     ub::Union{Vector{T},Nothing}=nothing, #upper bound for β
     scale::Bool=true,            # whether to scale x and y to the range of 0-10
