@@ -5,7 +5,7 @@
 ProxBTF.jl is dependent on Gurobi.jl. Before installing ProxBTF.jl, please see [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl) for instructions on how to install Gurobi.jl. Once Gurobi.jl is installed, the following code can be used to install ProxBTF.jl from github. 
 ````
 julia> using Pkg
-julia> Pkg.add("https://github.com/qhengncsu/ProxBTF.jl")
+julia> Pkg.add(url="https://github.com/qhengncsu/ProxBTF.jl")
 ````
 Installing ProxBTF.jl from github will intruct Julia to install its dependencies at their latest releases, which might stop working as the dependencies get updated. To ensure reproducibility and avoid dependency hell, you can also clone this repository, cd the project directory and press ] in Julia REPL to enter Pkg mode. Then the following code and help you reproduce the exact same environment as that of the author.
 ````
