@@ -2,7 +2,7 @@ mutable struct pbsrtfProblem{T<:Real}
     y       :: Vector{T}              # response
     x       :: Vector{T}              # design
     k       :: Int
-    restriction :: Union{String,Nothing} # 'increasing','convex','decreasing','concave'
+    restriction :: String             # 'increasing','convex','decreasing','concave'
                                       # 'inc-convex','inc-concave','dec-convex','dec-concave'
     lb      :: Union{Vector{T},Nothing} # lower bound vector for β
     ub      :: Union{Vector{T},Nothing} # upper bound vector for β
@@ -22,7 +22,7 @@ mutable struct pbsrtfProblem{T<:Real}
     GRB_ENV :: Any                    # gurobi environment
 end
 
-function pbsrtfProblem(y::Vector{T}, x::Vector{T}, k::Int, restriction::Union{String,Nothing};
+function pbsrtfProblem(y::Vector{T}, x::Vector{T}, k::Int, restriction::String;
                        lb::Union{Vector{T},Nothing}=nothing,
                        ub::Union{Vector{T},Nothing}=nothing,
                        thinning::Bool=false,nbins::Int=100,λ::Union{T,Nothing}=nothing,
@@ -43,7 +43,7 @@ function pbsrtfProblem(y::Vector{T}, x::Vector{T}, k::Int, restriction::Union{St
         n = nbins
     end
     if λ == nothing
-        λ = var(y)*1e-4
+        λ = var(y)*0.25*1e-3
     end
     if μ == nothing
        μ = 3.0
