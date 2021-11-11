@@ -6,7 +6,7 @@ using SparseArrays: SparseMatrixCSC,spdiagm
 using Roots: find_zero, Bisection
 using Lasso: fit, FusedLasso
 using Gurobi: Env, GRBsetdblparam, Optimizer
-using Convex: Variable, minimize, sumsquares, norm, pos, solve!, evaluate
+using Convex: Variable, minimize, sumsquares, norm, solve!, evaluate
 import LogDensityProblems.dimension,LogDensityProblems.capabilities
 import LogDensityProblems.logdensity_and_gradient,LogDensityProblems.LogDensityOrder
 using Parameters: @unpack
