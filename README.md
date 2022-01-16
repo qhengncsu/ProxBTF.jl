@@ -1,5 +1,6 @@
 # Introduction
- Bayesian Trend Filtering via Proximal MCMC
+ A Bayesian version of trend filtering based on proximal MCMC.
+ 
  Heng, Q., Zhou, H. and Chi, E. C. (2022+,2022+). Bayesian Trend Filtering via Proximal Markov Chain Monte Carlo. [arXiv:2201.00092](https://arxiv.org/abs/2201.00092)
 
 # Installation
