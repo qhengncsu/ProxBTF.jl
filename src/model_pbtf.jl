@@ -30,6 +30,9 @@ function pbtfProblem(y::AbstractArray{T}, x::AbstractArray{T}, k::Int;
     m = length(x)
     xgrid = sort(unique(x))
     n = length(xgrid)
+    if ((k==1) & (n>1000)) || ((k==2) & (n>200))
+        @warn "Transformation matrix is likely too ill-conditioned, setting thinning=true is recommended."
+    end
     w = zeros(T,n)
     ybar = zeros(T,n)
     sse = 0.0

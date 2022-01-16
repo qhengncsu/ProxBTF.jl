@@ -27,6 +27,9 @@ function pbsrtfProblem(y::Vector{T}, x::Vector{T}, k::Int, restriction::String;
                        ub::Union{Vector{T},Nothing}=nothing,
                        thinning::Bool=false,nbins::Int=100,λ::Union{T,Nothing}=nothing,
                        s::T=1e-3,r::T=1e-3,μ::Union{T,Nothing}=nothing) where T<: Real
+    if (k!=1) & (k!=2)
+        throw(ArgumentError("Currenly only k=1 and k=2 are accepted for pbsrtf."))
+    end
     m = length(x)
     xgrid = sort(unique(x))
     n = length(xgrid)
