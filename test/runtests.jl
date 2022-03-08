@@ -5,6 +5,11 @@ fx  = 13 .* sin.((4*π/100).*x)
 y = fx + σ .* randn(100)
 result_summary,result_quantile,problem,elapse_time=pbtf(y,x,2,nsample=3000)
 visualize(result_quantile,problem,legend_position=:top)
+x   = [1:1.:100;]
+fx  = 14 .*sin.(400 ./(x.+30))
+y = fx + 4.5 .* randn(100)
+result_summary,result_quantile,problem,elapse_time=pbtf(y,x,2,nsample=3000)
+visualize(result_quantile,problem,legend_position=:top)
 σ   = 1.0# noise s.d.
 x   = [0.1:0.1:10;]
 fx  = x .+ sin.(x)
