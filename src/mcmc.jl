@@ -23,10 +23,10 @@ function pbtf(
         elapse_time = @elapsed results = mcmc_with_warmup(GLOBAL_RNG, problem, nsample, initialization=(ϵ=0.01,q=q₀),
         warmup_stages=default_warmup_stages(;stepsize_search=nothing),reporter=NoProgressReport())
     end
-    results_matrix = reshape([(results.chain...)...], length(results.chain[1]), length(results.chain))
-    results_matrix[1:problem.n,:] = problem.TM \ results_matrix[1:problem.n,:]
-    results_matrix[end-1:end,:] = exp.(results_matrix[end-1:end,:])
-    chn = Chains(transpose(results_matrix),["β[" .* string.(1:problem.n) .*"]"; "σ²";"α"],thin=nthin)
+    result_matrix = reshape([(results.chain...)...], length(results.chain[1]), length(results.chain))
+    result_matrix[1:problem.n,:] = problem.TM \ result_matrix[1:problem.n,:]
+    result_matrix[end-1:end,:] = exp.(result_matrix[end-1:end,:])
+    chn = Chains(transpose(result_matrix),["β[" .* string.(1:problem.n) .*"]"; "σ²";"α"],thin=nthin)
     result_summary = DataFrame(summarize(chn))
     result_quantile = DataFrame(quantile(chn))
     return result_summary,result_quantile,result_matrix,problem,elapse_time
@@ -71,16 +71,16 @@ function pbsrtf(
         warmup_stages=default_warmup_stages(;stepsize_search=nothing,
         init_steps=50,middle_steps=50,doubling_stages=3,terminating_steps=50),reporter=NoProgressReport())
     end
-    results_matrix = reshape([(results.chain...)...], length(results.chain[1]), length(results.chain))
-    results_matrix[end-1:end,:] = exp.(results_matrix[end-1:end,:])
+    result_matrix = reshape([(results.chain...)...], length(results.chain[1]), length(results.chain))
+    result_matrix[end-1:end,:] = exp.(result_matrix[end-1:end,:])
     problem.x = problem.x .*xscale .+ xmin
     problem.y = problem.y .*yscale .+ ymin
     problem.xgrid = problem.xgrid .*xscale .+ xmin
     problem.ybar = problem.ybar .*yscale .+ ymin
-    results_matrix[1:end-2,:] .*= yscale
-    results_matrix[1:end-2,:] .+= ymin
-    results_matrix[end-1,:] .*= yscale^2
-    chn = Chains(transpose(results_matrix),["β[" .* string.(1:problem.n) .*"]"; "σ²";"α"],thin=nthin)
+    result_matrix[1:end-2,:] .*= yscale
+    result_matrix[1:end-2,:] .+= ymin
+    result_matrix[end-1,:] .*= yscale^2
+    chn = Chains(transpose(result_matrix),["β[" .* string.(1:problem.n) .*"]"; "σ²";"α"],thin=nthin)
     result_summary = DataFrame(summarize(chn))
     result_quantile = DataFrame(quantile(chn))
     return result_summary,result_quantile,result_matrix,problem,elapse_time
