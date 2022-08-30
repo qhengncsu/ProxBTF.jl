@@ -29,7 +29,7 @@ function pbtf(
     chn = Chains(transpose(results_matrix),["β[" .* string.(1:problem.n) .*"]"; "σ²";"α"],thin=nthin)
     result_summary = DataFrame(summarize(chn))
     result_quantile = DataFrame(quantile(chn))
-    return result_summary,result_quantile,problem,elapse_time
+    return result_summary,result_quantile,result_matrix,problem,elapse_time
 end
 
 function pbsrtf(
@@ -83,5 +83,5 @@ function pbsrtf(
     chn = Chains(transpose(results_matrix),["β[" .* string.(1:problem.n) .*"]"; "σ²";"α"],thin=nthin)
     result_summary = DataFrame(summarize(chn))
     result_quantile = DataFrame(quantile(chn))
-    return result_summary,result_quantile,problem,elapse_time
+    return result_summary,result_quantile,result_matrix,problem,elapse_time
 end
