@@ -21,3 +21,4 @@ StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 
 [compat]
 Lasso = "= 0.6.2"
+Gurobi = "= 0.9.14"
