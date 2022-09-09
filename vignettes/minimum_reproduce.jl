@@ -1,5 +1,5 @@
 #reproducing part of our results is as easy as
-#running this script from start to end in Julia (>=1.6) 
+#running this script from start to end in Julia (>=1.6)
 using Pkg
 Pkg.add("SparseArrays")
 Pkg.add("Roots")
@@ -274,13 +274,13 @@ function pbtf(
         warmup_stages=default_warmup_stages(;stepsize_search=nothing),reporter=NoProgressReport())
     end
     println(summarize_tree_statistics(results.tree_statistics))
-    results_matrix = reshape([(results.chain...)...], length(results.chain[1]), length(results.chain))
-    results_matrix[1:problem.n,:] = problem.TM \ results_matrix[1:problem.n,:]
-    results_matrix[end-1:end,:] = exp.(results_matrix[end-1:end,:])
-    chn = Chains(transpose(results_matrix),["β[" .* string.(1:problem.n) .*"]"; "σ²";"α"],thin=nthin)
+    result_matrix = reshape([(results.chain...)...], length(results.chain[1]), length(results.chain))
+    result_matrix[1:problem.n,:] = problem.TM \ result_matrix[1:problem.n,:]
+    result_matrix[end-1:end,:] = exp.(result_matrix[end-1:end,:])
+    chn = Chains(transpose(result_matrix),["β[" .* string.(1:problem.n) .*"]"; "σ²";"α"],thin=nthin)
     result_summary = DataFrame(summarize(chn))
     result_quantile = DataFrame(quantile(chn))
-    return result_summary,result_quantile,problem,elapse_time
+    return result_summary,result_quantile,result_matrix,problem,elapse_time
 end
 
 function visualize(result_quantile::DataFrame,problem::pbtfProblem;legend_position::Symbol=:topleft)
