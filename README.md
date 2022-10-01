@@ -4,7 +4,7 @@
  Heng, Q., Zhou, H. and Chi, E. C. (2022+,2022+). Bayesian Trend Filtering via Proximal Markov Chain Monte Carlo. [arXiv:2201.00092](https://arxiv.org/abs/2201.00092)
 
 # Installation
-ProxBTF.jl is dependent on Gurobi.jl. Before installing ProxBTF.jl, please see [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl) for instructions on how to install Gurobi.jl. Once Gurobi.jl is installed, the following code can be used to install ProxBTF.jl from github. 
+ProxBTF.jl is dependent on Gurobi.jl. Before installing ProxBTF.jl, please see [Gurobi.jl](https://github.com/jump-dev/Gurobi.jl) for instructions on how to install Gurobi.jl (version=0.9.14). Once Gurobi.jl is installed, the following code can be used to install ProxBTF.jl from github. 
 ````
 julia> using Pkg
 julia> Pkg.add(url="https://github.com/qhengncsu/ProxBTF.jl")
