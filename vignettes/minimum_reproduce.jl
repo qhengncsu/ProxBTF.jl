@@ -7,7 +7,7 @@ Pkg.add(name="Lasso", version="0.6.2")
 Pkg.add("LogDensityProblems")
 Pkg.add("Parameters")
 Pkg.add("Random")
-Pkg.add("DynamicHMC")
+Pkg.add(name="DynamicHMC",version="3.2.1")
 Pkg.add("DataFrames")
 Pkg.add("MCMCChains")
 Pkg.add("Statistics")
@@ -292,16 +292,16 @@ function visualize(result_quantile::DataFrame,problem::pbtfProblem;legend_positi
           result_quantile[1:problem.n, Symbol("97.5%")] .- result_quantile[1:problem.n, Symbol("50.0%")]),fillalpha=0.3)
 end
 
-#x = [1:1.:100;]
-#fx = map(xi -> 0 ≤ xi ≤ 35 ? xi : 35 < xi ≤ 70 ? 70-xi : 0.5xi-35, x)
-#σ = 3.0
-#y = fx .+  σ.*randn(100)
-#result_summary,result_quantile,problem,elapse_time = pbtf(y,x,1)
-#visualize(result_quantile,problem)
+x = [1:1.:100;]
+fx = map(xi -> 0 ≤ xi ≤ 35 ? xi : 35 < xi ≤ 70 ? 70-xi : 0.5xi-35, x)
+σ = 3.0
+y = fx .+  σ.*randn(100)
+result_summary,result_quantile,problem,elapse_time = pbtf(y,x,1)
+visualize(result_quantile,problem)
 
-#x = sort(100*rand(1000))
-#σ = 3.0
-#fx  = 13 .* sin.((4*π/100).*x)
-#y = fx .+  σ.*randn(1000)
-#result_summary,result_quantile,problem,elapse_time=pbtf(y,x,2;thinning=true)
-#visualize(result_quantile,problem)
+x = [1:1.:100;]
+σ = 3.0
+fx  = 13 .* sin.((4*π/100).*x)
+y = fx .+  σ.*randn(100)
+result_summary,result_quantile,problem,elapse_time=pbtf(y,x,2)
+visualize(result_quantile,problem)
